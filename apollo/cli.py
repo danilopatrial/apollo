@@ -3,7 +3,7 @@ from typing             import List
 
 import click
 
-from .math.main import main as math_cli
+from .math import main as math_cli
 
 
 def pkg_version() -> str:

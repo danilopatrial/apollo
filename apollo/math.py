@@ -35,8 +35,8 @@ def main(*args: Any, operation: str = 'eval') -> float:
     }
 
     if operation in op_list:
-        return float(op_list[operation](nums))
+        return f'{float(op_list[operation](nums)):,}'
     elif operation in op_single:
-        return float(op_single[operation](nums[0]))
+        return f'{float(op_single[operation](nums[0])):,}'
     else:
         raise ValueError(f"Unsupported operation: {operation}")
