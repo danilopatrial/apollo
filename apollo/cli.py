@@ -3,7 +3,8 @@ from typing             import List
 
 import click
 
-from .math import main as math_cli
+from . import math as _math
+from . import webcam as _webcam
 
 
 def pkg_version() -> str:
@@ -40,7 +41,14 @@ def main() -> None:
 def math(op: str, args: List[str]) -> None:
     '''Perform math operations on given numbers'''
     try:
-        result = math_cli(args, operation=op)
+        result = _math.main(args, operation=op)
         click.echo(f'= {result}')
     except Exception as e:
         click.echo(f'Error: {e}', err=True)
+
+
+@main.command()
+@click.option('--cam', 'camera', default=0, help='Camera index', type=int)
+def webcam(camera: int) -> None:
+    '''Displays a live webcam feed as ASCII art in the terminal.'''
+    _webcam.main(camera)
