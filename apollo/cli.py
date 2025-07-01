@@ -100,3 +100,12 @@ def config(show: bool, set_mode: bool, parameter: str | None, value: str | None)
 def play(url: str, shade: str, delete: bool) -> None:
     '''Displays a youtube video as ASCII art in the terminal.'''
     _ascii.play(shade, url, delete)
+
+
+@main.command()
+@click.option('-a', type=float, default=.04, show_default=True, help='Rotation angle around X-axis')
+@click.option('-b', type=float, default=.08, show_default=True, help='Rotation angle around Y-axis')
+@click.option('--speed', type=float, default=.03, show_default=True, help='Rotation speed. Time between frames.')
+def donut(a: float, b: float, speed: float) -> None:
+    '''donut.c from www.a1k0n.net/2011/07/20/donut-math.html'''
+    _ascii.donut(a, b, speed)
