@@ -1,10 +1,10 @@
 from importlib.metadata import version, PackageNotFoundError
-from typing             import List
+from typing             import List, Literal
 
 import click
 
-from . import math as _math
-from . import webcam as _webcam
+from . import math  as _math
+from . import ascii as _ascii
 
 
 def pkg_version() -> str:
@@ -48,7 +48,9 @@ def math(op: str, args: List[str]) -> None:
 
 
 @main.command()
-@click.option('--cam', 'camera', default=0, help='Camera index', type=int)
-def webcam(camera: int) -> None:
+@click.option('--shade', type=click.Choice(['solid', 'ascii', 'dot']), default='ascii', show_default=True, help='Shading style')
+@click.option('--grayscale', '_grayscale', type=click.Choice(['mean', 'default']), default='default', show_default=True, help='Grayscale method')
+@click.option('--cam', 'camera', type=int, default=0, show_default=True, help='Camera index')
+def webcam(shade: str, _grayscale: str, camera: int) -> None:
     '''Displays a live webcam feed as ASCII art in the terminal.'''
-    _webcam.main(camera)
+    _ascii.webcam(shade, _grayscale, camera)
