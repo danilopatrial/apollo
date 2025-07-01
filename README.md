@@ -10,7 +10,7 @@ Apollo is a problem solver, tool tester, and study platform where I experiment w
 ## Installation
 ```sh
 # Install apollo
-pip install git+https://github.com/daniloptrial/apollo.git
+pip install git+https://github.com/danilopatrial/apollo.git
 
 # Try it out
 apollo --version
