@@ -21,3 +21,26 @@ apollo --version
 # For more information run
 apollo --help
 ```
+
+## Configuration
+The current configuration file only specifies the output path for downloaded files. To set it correctly, use:
+```sh
+apollo config --set download-output-path /your/path/here
+
+# check if everything is ok with:
+apollo config --show
+```
+
+## Try it out
+```sh
+# If you have an webcam, run:
+apollo webcam --shade solid
+```
+```sh
+# Want to watch an youtube video on your terminal?
+apollo play https://www.youtube.com/watch?v=dQw4w9WgXcQ --shade solid -d
+```
+```sh
+# Download an youtube video
+apollo download https://www.youtube.com/watch?v=dQw4w9WgXcQ --res best -o
+```
