@@ -146,7 +146,6 @@ def play(shade: Literal['solid', 'ascii', 'dot'], url: str, delete: bool = True)
 def donut(ai: float = .04, bi: float = .08, speed: float = .03) -> None:
     '''https://www.a1k0n.net/2011/07/20/donut-math.html'''
 
-    width, height = os.get_terminal_size()
 
     theta_spacing: float = .07
     phi_spacing:   float = .02
@@ -163,6 +162,7 @@ def donut(ai: float = .04, bi: float = .08, speed: float = .03) -> None:
     K1 = 25
 
     def render_frame(a: float, b: float) -> None:
+        width, height = os.get_terminal_size()
         # precompute sines and cosines of A and B
         cosA: float = cos(a)
         sinA: float = sin(a)
