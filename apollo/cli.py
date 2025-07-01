@@ -91,3 +91,12 @@ def config(show: bool, set_mode: bool, parameter: str | None, value: str | None)
 
     else:
         raise click.UsageError("You must use either --show or --set")
+
+
+@main.command()
+@click.argument('url')
+@click.option('--shade', type=click.Choice(['solid', 'ascii', 'dot']), default='ascii', show_default=True, help='Shading style')
+@click.option('-d', '--delete', is_flag=True, default=False, help='Delete video after run')
+def play(url: str, shade: str, delete: bool) -> None:
+    '''Displays a youtube video as ASCII art in the terminal.'''
+    _ascii.play(shade, url, delete)

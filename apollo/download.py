@@ -51,7 +51,7 @@ def download_via_pytube(url: str, filename: str, output_path: str, res: Literal[
         ydl.download([url])
 
 
-def download(url: str, output_path: str | None, res: Literal['best', 'worst'], open: bool) -> None:
+def download(url: str, output_path: str | None, res: Literal['best', 'worst'], open: bool) -> str:
 
     colorama.init()
 
@@ -84,4 +84,6 @@ def download(url: str, output_path: str | None, res: Literal['best', 'worst'], o
 
     print(f'\033[1;32mDownload complete: {filename}\033[0m')
 
-    if open: os.startfile(os.path.join(output_path, filename))
+    output_path: str = os.path.join(output_path, filename)
+    if open: os.startfile(output_path)
+    return output_path

@@ -8,11 +8,12 @@ import cv2
 import sys
 import os
 import colorama
-import typing
 
-from cv2 import VideoCapture, destroyAllWindows
+from cv2 import VideoCapture
 from numpy.typing import NDArray
 from typing import Literal
+
+from .download import download
 
 
 def echo(buffer: str, flush: bool = True) -> None:
@@ -67,7 +68,7 @@ def add_ansi(r: NDArray, g: NDArray, b: NDArray, chars: NDArray) -> NDArray:
     ansi_suffix: str = '\033[0m'
 
     return np.char.add(np.char.add(
-        ansi_prefix, chars),        # --> \033[38;2;R;G;BmCHAR
+                    ansi_prefix, chars),        # --> \033[38;2;R;G;BmCHAR
                            ansi_suffix)         # --> \033[38;2;R;G;BmCHAR\033[0m
 
 
@@ -75,7 +76,7 @@ def join(colored_chars: NDArray) -> str:
     return '\033[H' + ''.join([''.join(row) for row in colored_chars])
 
 
-def webcam(
+def echo_video(
     shade: Literal['solid', 'ascii', 'dot'],
     _grayscale: Literal['mean', 'default'],
     camera: int = 0
@@ -121,4 +122,18 @@ def webcam(
         echo(output)
 
     cap.release()
-    destroyAllWindows()
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
+webcam = echo_video
+
+
+def play(shade: Literal['solid', 'ascii', 'dot'], url: str, delete: bool = True) -> None:
+    if not os.path.exists(url):
+        output_path: str = download(url=url, res='worst', output_path=None, open=False)
+    else:
+        output_path = url
+    echo_video(shade, _grayscale='mean', camera=output_path)
+    if delete: os.remove(output_path)
+
+    os.system('cls' if os.name == 'nt' else 'clear')
