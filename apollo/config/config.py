@@ -4,11 +4,13 @@
 from __future__ import annotations
 
 import json
+import os
 
 from typing import Any
 
 
 def show(parameter: str | None) -> None:
+    exists()
     with open('apollo\\config\\config.json', 'r') as file:
         json_dict: dict = json.load(file)
 
@@ -22,7 +24,15 @@ def show(parameter: str | None) -> None:
         print(f'Parameter {parameter} not found.')
 
 
+def exists() -> None:
+    base_dict: dict = {'download-output-path': 'None'}
+    if not os.path.exists('apollo\\config\\config.json'):
+        with open('apollo\\config\\config.json', 'w') as file:
+            json.dump(base_dict, file, indent=2, ensure_ascii=False)
+
+
 def get(parameter: str) -> Any:
+    exists()
     with open('apollo\\config\\config.json', 'r') as file:
         json_dict: dict = json.load(file)
 
@@ -33,6 +43,7 @@ def get(parameter: str) -> Any:
 
 
 def cset(parameter: str, value: Any) -> None:
+    exists()
     with open('apollo\\config\\config.json', 'r') as file:
         json_dict: dict = json.load(file)
 
