@@ -73,7 +73,7 @@ def add_ansi(r: NDArray, g: NDArray, b: NDArray, chars: NDArray) -> NDArray:
 
 
 def join(colored_chars: NDArray) -> str:
-    return '\033[H' + ''.join([''.join(row) for row in colored_chars])
+    return ('\033[H' + ''.join([''.join(row[::-1]) for row in colored_chars]))
 
 
 def echo_video(
