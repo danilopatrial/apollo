@@ -3,9 +3,10 @@
 
 from __future__ import annotations
 
-import numpy as np, sys, os, shutil
-from numpy.typing import NDArray
+import numpy as np, sys
+import sys
 
+from numpy.typing import NDArray
 from typing import Protocol, Any, runtime_checkable
 from warnings import warn
 
