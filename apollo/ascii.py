@@ -16,8 +16,7 @@ from cv2 import VideoCapture
 from numpy.typing import NDArray
 from typing import Literal
 
-#from .download import download
-def download(*args, **kwargs) -> None: ...
+from .download import download
 
 
 def echo(buffer: str, flush: bool = True) -> None:
