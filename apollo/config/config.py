@@ -1,0 +1,46 @@
+# config/config.py
+# Script to access config/config.json
+
+from __future__ import annotations
+
+import json
+
+from typing import Any
+
+
+def show(parameter: str | None) -> None:
+    with open('apollo\\config\\config.json', 'r') as file:
+        json_dict: dict = json.load(file)
+
+    if parameter is None:
+        print(json.dumps(json_dict, indent=2, ensure_ascii=False))
+
+    elif parameter in json_dict:
+        print(f'{parameter}: {json_dict[parameter]}')
+
+    else:
+        print(f'Parameter {parameter} not found.')
+
+
+def get(parameter: str) -> Any:
+    with open('apollo\\config\\config.json', 'r') as file:
+        json_dict: dict = json.load(file)
+
+    if parameter not in json_dict:
+        raise ValueError('Paramter not found.')
+
+    return json_dict[parameter]
+
+
+def cset(parameter: str, value: Any) -> None:
+    with open('apollo\\config\\config.json', 'r') as file:
+        json_dict: dict = json.load(file)
+
+    if parameter in json_dict:
+        json_dict[parameter] = value
+
+    else:
+        print(f'Parameter {parameter} not found.')
+
+    with open('apollo\\config\\config.json', 'w') as file:
+        json.dump(json_dict, file, indent=2, ensure_ascii=False)
