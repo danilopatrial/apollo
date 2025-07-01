@@ -16,7 +16,8 @@ from cv2 import VideoCapture
 from numpy.typing import NDArray
 from typing import Literal
 
-from .download import download
+#from .download import download
+def download(*args, **kwargs) -> None: ...
 
 
 def echo(buffer: str, flush: bool = True) -> None:
@@ -232,7 +233,7 @@ def donut(ai: float = .04, bi: float = .08, speed: float = .03) -> None:
         # bring cursor to "home" location, in just about any currently-used
         # terminal emulation mode
         #os.system('cls' if os.name == 'nt' else 'clear')
-        echo('\n'.join(''.join(row) for row in output))
+        echo(''.join(''.join(row) for row in output))
 
     a, b = 0, 0
     while True:
