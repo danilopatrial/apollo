@@ -1,3 +1,7 @@
+# graph.py
+# Plot cartesian graphs into the terminal
+
+from __future__ import annotations
 
 import numpy as np, sys, os, shutil
 from numpy.typing import NDArray

@@ -1,10 +1,17 @@
+# cli.py
+# Command Line Interface
+
+from __future__ import annotations
+
 from importlib.metadata import version, PackageNotFoundError
-from typing             import List, Literal
+from typing import List, Literal
 
 import click
 
-from . import math  as _math
+from . import math as _math
 from . import ascii as _ascii
+from . import download as _download
+from .config import config as _config
 
 
 def pkg_version() -> str:
@@ -54,3 +61,33 @@ def math(op: str, args: List[str]) -> None:
 def webcam(shade: str, _grayscale: str, camera: int) -> None:
     '''Displays a live webcam feed as ASCII art in the terminal.'''
     _ascii.webcam(shade, _grayscale, camera)
+
+
+@main.command()
+@click.argument('url')
+@click.option('--output-path', default=None, help='Optional path to save the file')
+@click.option('--res', default='best', type=click.Choice(['best', 'worst']), show_default=True, help='Video resolution')
+@click.option('-o', '--open', is_flag=True, default=False, help='Open video after download')
+def download(url: str, output_path: str, res: str, open: bool) -> None:
+    '''Download youtube video from a given URL'''
+    _download.download(url, output_path, res, open)
+
+
+@main.command()
+@click.option('--show', is_flag=True, help='Show a config parameter or all')
+@click.option('--set', 'set_mode', is_flag=True, help='Set a config parameter')
+@click.argument('parameter', required=False)
+@click.argument('value', required=False)
+def config(show: bool, set_mode: bool, parameter: str | None, value: str | None) -> None:
+    '''View or update configuration.'''
+
+    if show:
+        _config.show(parameter)
+
+    elif set_mode:
+        if not parameter or not value:
+            raise click.UsageError("You must provide both <parameter> and <value> with --set")
+        _config.cset(parameter, value)
+
+    else:
+        raise click.UsageError("You must use either --show or --set")
