@@ -11,7 +11,8 @@ dependencies = [
     "colorama",
     "click",
     "pytube",
-    "yt-dlp"
+    "yt-dlp",
+    "platformdirs"
 ]
 
 [project.scripts]

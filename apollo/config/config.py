@@ -7,11 +7,20 @@ import json
 import os
 
 from typing import Any
+from platformdirs import user_config_dir
 
+
+config_dir = user_config_dir('apollo')
+config_path = os.path.join(config_dir, 'config.json')
+
+os.makedirs(config_dir, exist_ok=True)
+
+if not os.path.exists(config_path):
+    with open(config_path, 'w') as f:
+        json.dump({"download-output-path": "None"}, f)
 
 def show(parameter: str | None) -> None:
-    exists()
-    with open(json_path, 'r') as file:
+    with open(config_path, 'r') as file:
         json_dict: dict = json.load(file)
 
     if parameter is None:
@@ -24,21 +33,9 @@ def show(parameter: str | None) -> None:
         print(f'Parameter {parameter} not found.')
 
 
-json_path = os.path.join('Apollo', 'apollo', 'config', 'config.json')
-
-def exists() -> None:
-    base_dict: dict = {'download-output-path': 'None'}
-
-    os.makedirs(os.path.dirname(json_path), exist_ok=True)
-
-    if not os.path.isfile(json_path):
-        with open(json_path, 'w', encoding='utf-8') as file:
-            json.dump(base_dict, file, indent=2, ensure_ascii=False)
-
 
 def get(parameter: str) -> Any:
-    exists()
-    with open(json_path, 'r') as file:
+    with open(config_path, 'r') as file:
         json_dict: dict = json.load(file)
 
     if parameter not in json_dict:
@@ -48,8 +45,7 @@ def get(parameter: str) -> Any:
 
 
 def cset(parameter: str, value: Any) -> None:
-    exists()
-    with open(json_path, 'r') as file:
+    with open(config_path, 'r') as file:
         json_dict: dict = json.load(file)
 
     if parameter in json_dict:
@@ -58,5 +54,5 @@ def cset(parameter: str, value: Any) -> None:
     else:
         print(f'Parameter {parameter} not found.')
 
-    with open(json_path, 'w') as file:
+    with open(config_path, 'w') as file:
         json.dump(json_dict, file, indent=2, ensure_ascii=False)
