@@ -8,7 +8,6 @@ import os
 
 from typing import Any
 
-json_path: str = 'Apollo\\apollo\\config\\config.json'
 
 def show(parameter: str | None) -> None:
     exists()
@@ -25,10 +24,15 @@ def show(parameter: str | None) -> None:
         print(f'Parameter {parameter} not found.')
 
 
+json_path = os.path.join('Apollo', 'apollo', 'config', 'config.json')
+
 def exists() -> None:
     base_dict: dict = {'download-output-path': 'None'}
-    if not os.path.exists(json_path):
-        with open(json_path, 'w') as file:
+
+    os.makedirs(os.path.dirname(json_path), exist_ok=True)
+
+    if not os.path.isfile(json_path):
+        with open(json_path, 'w', encoding='utf-8') as file:
             json.dump(base_dict, file, indent=2, ensure_ascii=False)
 
 
