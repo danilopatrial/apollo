@@ -11,7 +11,7 @@ import click
 from . import math as _math
 from . import ascii as _ascii
 from . import download as _download
-from .config import config as _config
+from . import config as _config
 
 
 def pkg_version() -> str:

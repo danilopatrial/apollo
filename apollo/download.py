@@ -13,7 +13,7 @@ import colorama
 import click
 
 from typing import Literal
-from .config.config import get as config_get
+from .config import get as config_get
 
 def get_unique_filename(output_path: str, base: str, ext: str) -> str:
     i = 0
