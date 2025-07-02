@@ -12,6 +12,7 @@ from . import math as _math
 from . import ascii as _ascii
 from . import download as _download
 from . import config as _config
+from . import file_manager as _file_manager
 
 
 def pkg_version() -> str:
@@ -109,3 +110,10 @@ def play(url: str, shade: str, delete: bool) -> None:
 def donut(a: float, b: float, speed: float) -> None:
     '''donut.c from www.a1k0n.net/2011/07/20/donut-math.html'''
     _ascii.donut(a, b, speed)
+
+
+@main.command()
+@click.argument('dir')
+@click.option('-n', type=int, default=0, help='Show n files')
+def ls(dir: str, n: int) -> None:
+    _file_manager.ls(dir, n)
