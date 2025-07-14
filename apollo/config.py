@@ -1,5 +1,5 @@
-# config/config.py
-# Script to access config/config.json
+# config.py
+# Script to access the config file
 
 from __future__ import annotations
 

@@ -7,13 +7,13 @@ from importlib.metadata import version, PackageNotFoundError
 from typing import List, Literal
 
 import click
+import pathlib
 
 from . import math as _math
 from . import ascii as _ascii
 from . import download as _download
 from . import config as _config
-from . import file_manager as _file_manager
-
+from . import count_lines as _countlines
 
 def pkg_version() -> str:
     try:
@@ -111,9 +111,11 @@ def donut(a: float, b: float, speed: float) -> None:
     '''donut.c from www.a1k0n.net/2011/07/20/donut-math.html'''
     _ascii.donut(a, b, speed)
 
-
 @main.command()
-@click.argument('dir')
-@click.option('-n', type=int, default=0, help='Show n files')
-def ls(dir: str, n: int) -> None:
-    _file_manager.ls(dir, n)
+@click.argument("dir", type=click.Path(exists=True, file_okay=False, dir_okay=True, path_type=pathlib.Path))
+@click.option("-b", "--skip-blank", default=False, help="Ignore completely blank lines.",)
+@click.option("-c", "--skip-comments", default=False, help="Ignore lines that begin with # or //.")
+@click.option("-e","--ext","exts",multiple=True,metavar="EXT",help="Additional file extensions to count (e.g. -e .rs -e .go). If omitted, the default list from the library is used.")
+def countlines(dir: str, skip_blank: bool, skip_comments: bool, exts: list = []) -> None:
+    """Count the number of lines of code in a single directory"""
+    _countlines.main(dir, skip_blank, skip_comments, exts)
