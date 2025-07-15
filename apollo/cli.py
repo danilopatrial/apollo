@@ -113,8 +113,8 @@ def donut(a: float, b: float, speed: float) -> None:
 
 @main.command()
 @click.argument("dir", type=click.Path(exists=True, file_okay=False, dir_okay=True, path_type=pathlib.Path))
-@click.option("-b", "--skip-blank", default=False, help="Ignore completely blank lines.",)
-@click.option("-c", "--skip-comments", default=False, help="Ignore lines that begin with # or //.")
+@click.option("-b", "--skip-blank", default=False, is_flag=True, help="Ignore completely blank lines.",)
+@click.option("-c", "--skip-comments", default=False, is_flag=True, help="Ignore lines that begin with # or //.")
 @click.option("-e","--ext","exts",multiple=True,metavar="EXT",help="Additional file extensions to count (e.g. -e .rs -e .go). If omitted, the default list from the library is used.")
 def countlines(dir: str, skip_blank: bool, skip_comments: bool, exts: list = []) -> None:
     """Count the number of lines of code in a single directory"""
